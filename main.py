@@ -1,23 +1,8 @@
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from enum import Enum
+from schemas import OperacionEnum, OperacionRequest
 
-app = FastAPI(title="API Calculadora con Enum")
+app = FastAPI(title="API Calculadora con Schemas")
 
-# 1. Enum de operaciones permitidas
-class OperacionEnum(str, Enum):
-    suma = "suma"
-    resta = "resta"
-    multiplicacion = "multiplicacion"
-    division = "division"
-
-# . Modelo de datos (body)
-class OperacionRequest(BaseModel):
-    a: float
-    b: float
-    operacion: OperacionEnum
-
-# . Endpoint POST
 @app.post("/calcular")
 def calcular(datos: OperacionRequest):
     if datos.operacion == OperacionEnum.suma:
